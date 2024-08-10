@@ -1,0 +1,58 @@
+// prisma/schema.prisma
+
+// Define the datasource block
+datasource db {
+  provider = "postgresql" // Replace with your database provider
+  url      = env("DATABASE_URL") // Environment variable for the connection URL
+}
+
+// Define the generator block (Prisma Client)
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define your models
+model InterestDistribution {
+  id               String   @id @default(cuid())
+  loanRequestId    String
+  interestAmount   Float
+  lenderShare      Float
+  platformShare    Float
+  distributorShare Float
+}
+
+model LoanRequest {
+  id            String   @id @default(cuid())
+  userId        String
+  amount        Float
+  purpose       String
+  duration      Int
+  interestRate  Float
+  status        String
+  fundedAmount  Float
+  npaReason     String?  // Optional field for NPA reason
+  dateMarked    DateTime? // Optional field for date marked NPA
+}
+
+model Repayment {
+  id              String   @id @default(cuid())
+  loanRequestId   String
+  amount          Float
+  repaymentDate   DateTime
+  userId          String
+  status          String   // Add status field
+}
+
+model User {
+  id       String   @id @default(cuid())
+  name     String
+  email    String   @unique
+  password String
+}
+model Wallet {
+  id          String   @id @default(cuid())
+  userId      String   @unique  // Mark userId as unique if applicable
+  balance     Float
+  paymentMethod String
+}
+
