@@ -11,8 +11,8 @@ import { PrismaModule } from '../prisma/prisma.module'; // Adjust the path if ne
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: process.env.hello || 'default-secret', // Use environment variable or default value
-      signOptions: { expiresIn: '60m' }, // Token expiration time
+      secret: process.env.JWT_SECRET || 'default-secret', // Use environment variable or default value
+      signOptions: { expiresIn: '24h' }, // Token expiration time
     }),
     PrismaModule,
   ],

@@ -19,6 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    console.log('JWT Payload:', payload);
     // Implement your validation logic here
     return this.userService.findById(payload.sub); // Example: adjust according to your needs
   }
